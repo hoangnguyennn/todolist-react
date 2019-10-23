@@ -1,0 +1,56 @@
+.footer {
+    width: 100%;
+    justify-content: space-between;
+    opacity: .8;
+}
+
+.footer,
+.todo-count,
+.filter {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+}
+
+.todo-count > *,
+.filter > * {
+    padding: 0 2px;
+}
+
+.todo-count > :first-child {
+    margin-left: 0;
+}
+
+.filter {
+    list-style-type: none;
+}
+
+.filter > * {
+    margin: 0 4px;
+    padding: 0 10px;
+    border: 1px solid rgba(175, 47, 47, 0);
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.filter > .selected,
+.filter > *:hover {
+    border: 1px solid rgba(175, 47, 47, 0.2);
+}
+
+.clear-completed {
+    background: transparent;
+    border: none;
+}
+
+.clear-completed:focus {
+    outline: none;
+}
+
+.clear-completed:hover {
+    text-decoration: underline;
+}
+
+.clear-completed.hidden {
+    visibility: hidden;
+}
