@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
 
 import './Footer.css';
 
@@ -49,6 +50,15 @@ class Footer extends Component {
             </div>
         )
     }
+}
+
+Footer.propTypes = {
+    counter: PropTypes.number,
+    selected: PropTypes.string,
+    filterAll: PropTypes.func,
+    filterActive: PropTypes.func,
+    filterCompleted: PropTypes.func,
+    clearCompleted: PropTypes.func
 }
 
 export default Footer;

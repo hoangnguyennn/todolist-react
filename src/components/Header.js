@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import './Header.css';
 
@@ -33,6 +34,13 @@ class TopSearch extends Component {
             </div>
         )
     }
+}
+
+TopSearch.propTypes = {
+    addNewItem: PropTypes.func,
+    newItemChange: PropTypes.func,
+    allItemClick: PropTypes.func,
+    newItem: PropTypes.string
 }
 
 export default TopSearch;

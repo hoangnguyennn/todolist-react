@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import classnames from 'classnames';
+import PropTypes from 'prop-types';
+
 import './ListItem.css';
 
 import check from '../imgs/check.svg';
@@ -13,7 +15,7 @@ class ListItem extends Component {
         return (
             <div className={classnames('item', {
                     'item-complete': item.isComplete
-            })}>
+            })} >
                 <img
                     src={img}
                     alt=''
@@ -22,6 +24,14 @@ class ListItem extends Component {
             </div>
         );
     }
+}
+
+ListItem.propTypes = {
+    item: PropTypes.shape({
+        title: PropTypes.string,
+        isComplete: PropTypes.bool
+    }),
+    onClick: PropTypes.func
 }
 
 export default ListItem;

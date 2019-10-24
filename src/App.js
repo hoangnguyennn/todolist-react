@@ -57,9 +57,8 @@ class App extends Component {
 			console.log('Delete an item');
 			let todoList = this.state.todoList;
 			todoList.splice(index, 1);
-			this.setState({
-				todoList: todoList
-			})
+
+			this.setState({ todoList: todoList });
 		}
 	}
 
@@ -85,9 +84,7 @@ class App extends Component {
 	}
 
 	newItemChange(event) {
-		this.setState({
-			newItem: event.target.value
-		});
+		this.setState({ newItem: event.target.value });
 	}
 	
 	allItemClick() {
@@ -108,9 +105,7 @@ class App extends Component {
 			return {...item, isComplete: true};
 		});
 
-		this.setState({
-			todoList: todoList
-		});
+		this.setState({ todoList: todoList });
 	}
 
 	uncheckAllItem() {
@@ -119,9 +114,7 @@ class App extends Component {
 			return {...item, isComplete: false};
 		});
 
-		this.setState({
-			todoList: todoList
-		});
+		this.setState({ todoList: todoList });
 	}
 
 	filterItem() {
@@ -162,9 +155,7 @@ class App extends Component {
 	}
 
 	clearCompleted() {
-		this.setState({
-			todoList: this.activeItem()
-		});
+		this.setState({ todoList: this.activeItem() });
 	}
 
 	render() {
@@ -184,8 +175,7 @@ class App extends Component {
 					</ListGroupItem>
 					{
 						filter.map((item, index) => (
-							<ListGroupItem
-								key={index} >
+							<ListGroupItem key={index} >
 								<ListItem
 									item={item}
 									onClick={this.changeStatus(item)} />
