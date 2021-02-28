@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
 
-import './ListItem.css';
+import './style.css';
 
-import check from '../imgs/check.svg';
-import checked from '../imgs/checked.svg';
+import check from '../../imgs/check.svg';
+import checked from '../../imgs/checked.svg';
 
 class ListItem extends Component {
 	render() {

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import './Header.css';
+import './style.css';
 
-import checkAll from '../imgs/check-all.svg';
+import checkAll from '../../imgs/check-all.svg';
 
 class TopSearch extends Component {
 	constructor(props) {
