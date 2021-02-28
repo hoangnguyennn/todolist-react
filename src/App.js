@@ -16,11 +16,11 @@ class App extends Component {
 		this.state = {
 			newItem: '',
 			todoList: [
-				{title: "Ăn", isComplete: false},
-				{title: "Ngủ", isComplete: false},
-				{title: "Code", isComplete: true}
+				{ title: 'Ăn', isComplete: false },
+				{ title: 'Ngủ', isComplete: false },
+				{ title: 'Code', isComplete: true },
 			],
-			selected: 'all'
+			selected: 'all',
 		};
 
 		this.addNewItem = this.addNewItem.bind(this);
@@ -44,12 +44,12 @@ class App extends Component {
 					...todoList.slice(0, index),
 					{
 						...item,
-						isComplete: !item.isComplete
+						isComplete: !item.isComplete,
 					},
-					...todoList.slice(index + 1)
-				]
-			})
-		}
+					...todoList.slice(index + 1),
+				],
+			});
+		};
 	}
 
 	deleteItem(index) {
@@ -59,25 +59,25 @@ class App extends Component {
 			todoList.splice(index, 1);
 
 			this.setState({ todoList: todoList });
-		}
+		};
 	}
 
 	addNewItem(event) {
-		if(event.keyCode === 13) {
+		if (event.keyCode === 13) {
 			console.log('Add new item to todoList');
 			let text = event.target.value;
 			text = text.trim();
 
-			if(text.length !== 0) {
+			if (text.length !== 0) {
 				this.setState({
 					newItem: '',
 					todoList: [
 						...this.state.todoList,
 						{
 							title: text,
-							isComplete: false
-						}
-					]
+							isComplete: false,
+						},
+					],
 				});
 			}
 		}
@@ -86,13 +86,13 @@ class App extends Component {
 	newItemChange(event) {
 		this.setState({ newItem: event.target.value });
 	}
-	
+
 	allItemClick() {
 		let hasItemNotComplete = !this.state.todoList.every((item) => {
 			return item.isComplete;
 		});
 
-		if(hasItemNotComplete) {
+		if (hasItemNotComplete) {
 			this.checkAllItem();
 		} else {
 			this.uncheckAllItem();
@@ -102,7 +102,7 @@ class App extends Component {
 	checkAllItem() {
 		let todoList = this.state.todoList;
 		todoList = todoList.map((item) => {
-			return {...item, isComplete: true};
+			return { ...item, isComplete: true };
 		});
 
 		this.setState({ todoList: todoList });
@@ -111,7 +111,7 @@ class App extends Component {
 	uncheckAllItem() {
 		let todoList = this.state.todoList;
 		todoList = todoList.map((item) => {
-			return {...item, isComplete: false};
+			return { ...item, isComplete: false };
 		});
 
 		this.setState({ todoList: todoList });
@@ -119,8 +119,8 @@ class App extends Component {
 
 	filterItem() {
 		let { selected } = this.state;
-		
-		switch(selected) {
+
+		switch (selected) {
 			case 'active':
 				return this.activeItem();
 			case 'completed':
@@ -145,7 +145,7 @@ class App extends Component {
 	filterAll() {
 		this.setState({ selected: 'all' });
 	}
-	
+
 	filterActive() {
 		this.setState({ selected: 'active' });
 	}
@@ -171,21 +171,15 @@ class App extends Component {
 							addNewItem={this.addNewItem}
 							newItemChange={this.newItemChange}
 							allItemClick={this.allItemClick}
-							newItem={newItem} />
+							newItem={newItem}
+						/>
 					</ListGroupItem>
-					{
-						filter.map((item, index) => (
-							<ListGroupItem key={index} >
-								<ListItem
-									item={item}
-									onClick={this.changeStatus(item)} />
-								<img
-									src={close}
-									alt=''
-									onClick={this.deleteItem(index)} />
-							</ListGroupItem>
-						))
-					}
+					{filter.map((item, index) => (
+						<ListGroupItem key={index}>
+							<ListItem item={item} onClick={this.changeStatus(item)} />
+							<img src={close} alt="" onClick={this.deleteItem(index)} />
+						</ListGroupItem>
+					))}
 					<ListGroupItem>
 						<Footer
 							counter={counter}
@@ -193,7 +187,8 @@ class App extends Component {
 							filterAll={this.filterAll}
 							filterActive={this.filterActive}
 							filterCompleted={this.filterCompleted}
-							clearCompleted={this.clearCompleted} />
+							clearCompleted={this.clearCompleted}
+						/>
 					</ListGroupItem>
 				</ListGroup>
 			</div>
