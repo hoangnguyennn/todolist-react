@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 
 import './style.css';
 
-import checkAll from '../../imgs/check-all.svg';
+import checkAll from '../../assets/images/check-all.svg';
 
 const inputRef = createRef();
 
-const Header = ({ addNewItem, newItemChange, allItemClick, newItem }) => {
+const Header = ({ addNewItem, newTodoTitleChange, allItemClick, newItem }) => {
 	useEffect(() => {
 		inputRef.current.focus();
 	}, []);
@@ -19,7 +19,7 @@ const Header = ({ addNewItem, newItemChange, allItemClick, newItem }) => {
 				type="text"
 				placeholder="Điều gì bạn muốn làm?"
 				value={newItem}
-				onChange={newItemChange}
+				onChange={newTodoTitleChange}
 				onKeyUp={addNewItem}
 				ref={inputRef}
 			/>
@@ -29,7 +29,7 @@ const Header = ({ addNewItem, newItemChange, allItemClick, newItem }) => {
 
 Header.propTypes = {
 	addNewItem: PropTypes.func,
-	newItemChange: PropTypes.func,
+	newTodoTitleChange: PropTypes.func,
 	allItemClick: PropTypes.func,
 	newItem: PropTypes.string,
 };

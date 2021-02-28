@@ -7,7 +7,7 @@ import Header from './components/Header';
 import ListItem from './components/ListItem';
 import Footer from './components/Footer';
 
-import close from './imgs/close.svg';
+import close from './assets/images/close.svg';
 
 const App = () => {
 	const [newItem, setNewItem] = useState('');
@@ -18,7 +18,7 @@ const App = () => {
 	]);
 	const [filterType, setFilterType] = useState('all');
 
-	const addNewItem = (event) => {
+	const addTodo = (event) => {
 		if (event.keyCode === 13) {
 			const title = event.target.value;
 
@@ -30,19 +30,13 @@ const App = () => {
 		}
 	};
 
-	const handleInputChange = (event) => {
+	const newTodoTitleChange = (event) => {
 		setNewItem(event.target.value);
 	};
 
-	const checkAllItems = () => {
+	const changeTodosStatus = (isCompleted) => {
 		setTodoList((todoList) =>
-			todoList.map((todo) => ({ ...todo, isCompleted: true }))
-		);
-	};
-
-	const unCheckAllItem = () => {
-		setTodoList((todoList) =>
-			todoList.map((todo) => ({ ...todo, isCompleted: false }))
+			todoList.map((todo) => ({ ...todo, isCompleted }))
 		);
 	};
 
@@ -50,9 +44,9 @@ const App = () => {
 		let hasItemUncompleted = todoList.some((todo) => !todo.isCompleted);
 
 		if (hasItemUncompleted) {
-			checkAllItems();
+			changeTodosStatus(true);
 		} else {
-			unCheckAllItem();
+			changeTodosStatus(false);
 		}
 	};
 
@@ -72,11 +66,11 @@ const App = () => {
 		}
 	};
 
-	const clearCompleted = () => {
+	const clearTodosCompleted = () => {
 		setTodoList((todoList) => todoList.filter((todo) => !todo.isCompleted));
 	};
 
-	const changeStatus = (index) => {
+	const changeTodoStatus = (index) => {
 		if (todoList[index]) {
 			setTodoList((todoList) => [
 				...todoList.slice(0, index),
@@ -89,7 +83,7 @@ const App = () => {
 		}
 	};
 
-	const deleteItem = (index) => {
+	const deleteTodo = (index) => {
 		if (todoList[index]) {
 			setTodoList((todoList) => [
 				...todoList.slice(0, index),
@@ -98,7 +92,7 @@ const App = () => {
 		}
 	};
 
-	const todoListFiltered = (type) => {
+	const todosFiltered = (type) => {
 		return todoList.filter((todo) => {
 			switch (type) {
 				case 'all':
@@ -113,8 +107,8 @@ const App = () => {
 		});
 	};
 
-	const todoListCounter = (type) => {
-		return todoListFiltered(type).length;
+	const todosFilteredCounter = (type) => {
+		return todosFiltered(type).length;
 	};
 
 	return (
@@ -122,26 +116,29 @@ const App = () => {
 			<ListGroup>
 				<ListGroupItem>
 					<Header
-						addNewItem={addNewItem}
-						newItemChange={handleInputChange}
+						addTodo={addTodo}
+						newTodoTitleChange={newTodoTitleChange}
 						allItemClick={allItemClick}
 						newItem={newItem}
 					/>
 				</ListGroupItem>
-				{todoListFiltered(filterType).map((item, index) => (
+				{todosFiltered(filterType).map((item, index) => (
 					<ListGroupItem key={index}>
-						<ListItem item={item} onClick={() => changeStatus(index)} />
-						<img src={close} alt="" onClick={() => deleteItem(index)} />
+						<ListItem
+							item={item}
+							changeTodoStatus={() => changeTodoStatus(index)}
+						/>
+						<img src={close} alt="" onClick={() => deleteTodo(index)} />
 					</ListGroupItem>
 				))}
 				<ListGroupItem>
 					<Footer
-						counter={todoListCounter('active')}
+						counter={todosFilteredCounter('active')}
 						selected={filterType}
 						filterAll={() => changeFilterType('all')}
 						filterActive={() => changeFilterType('active')}
 						filterCompleted={() => changeFilterType('completed')}
-						clearCompleted={clearCompleted}
+						clearTodosCompleted={clearTodosCompleted}
 					/>
 				</ListGroupItem>
 			</ListGroup>

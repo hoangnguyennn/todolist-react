@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 
 import './style.css';
 
-import check from '../../imgs/check.svg';
-import checked from '../../imgs/checked.svg';
+import check from '../../assets/images/check.svg';
+import checked from '../../assets/images/checked.svg';
 
-const ListItem = ({ item, onClick }) => {
+const ListItem = ({ item, changeTodoStatus }) => {
 	const img = item.isCompleted ? checked : check;
 
 	return (
@@ -15,7 +15,7 @@ const ListItem = ({ item, onClick }) => {
 				'item-complete': item.isCompleted,
 			})}
 		>
-			<img src={img} alt="" onClick={onClick} />
+			<img src={img} alt="" onClick={changeTodoStatus} />
 			<div>{item.title}</div>
 		</div>
 	);
@@ -26,7 +26,7 @@ ListItem.propTypes = {
 		title: PropTypes.string,
 		isCompleted: PropTypes.bool,
 	}),
-	onClick: PropTypes.func,
+	changeTodoStatus: PropTypes.func,
 };
 
 export default ListItem;
