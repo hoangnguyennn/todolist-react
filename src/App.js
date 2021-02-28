@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { useState } from 'react';
 import { ListGroup, ListGroupItem } from 'reactstrap';
 
 import './App.css';
@@ -9,191 +9,144 @@ import Footer from './components/Footer';
 
 import close from './imgs/close.svg';
 
-class App extends Component {
-	constructor(props) {
-		super(props);
+const App = () => {
+	const [newItem, setNewItem] = useState('');
+	const [todoList, setTodoList] = useState([
+		{ title: 'Ăn', isCompleted: false },
+		{ title: 'Ngủ', isCompleted: false },
+		{ title: 'Code', isCompleted: true },
+	]);
+	const [filterType, setFilterType] = useState('all');
 
-		this.state = {
-			newItem: '',
-			todoList: [
-				{ title: 'Ăn', isComplete: false },
-				{ title: 'Ngủ', isComplete: false },
-				{ title: 'Code', isComplete: true },
-			],
-			selected: 'all',
-		};
-
-		this.addNewItem = this.addNewItem.bind(this);
-		this.newItemChange = this.newItemChange.bind(this);
-		this.allItemClick = this.allItemClick.bind(this);
-
-		this.filterAll = this.filterAll.bind(this);
-		this.filterActive = this.filterActive.bind(this);
-		this.filterCompleted = this.filterCompleted.bind(this);
-		this.clearCompleted = this.clearCompleted.bind(this);
-	}
-
-	changeStatus(item) {
-		return () => {
-			console.log('Change status of item');
-			let index = this.state.todoList.indexOf(item);
-			let todoList = this.state.todoList;
-
-			this.setState({
-				todoList: [
-					...todoList.slice(0, index),
-					{
-						...item,
-						isComplete: !item.isComplete,
-					},
-					...todoList.slice(index + 1),
-				],
-			});
-		};
-	}
-
-	deleteItem(index) {
-		return () => {
-			console.log('Delete an item');
-			let todoList = this.state.todoList;
-			todoList.splice(index, 1);
-
-			this.setState({ todoList: todoList });
-		};
-	}
-
-	addNewItem(event) {
+	const addNewItem = (event) => {
 		if (event.keyCode === 13) {
-			console.log('Add new item to todoList');
-			let text = event.target.value;
-			text = text.trim();
+			const title = event.target.value;
 
-			if (text.length !== 0) {
-				this.setState({
-					newItem: '',
-					todoList: [
-						...this.state.todoList,
-						{
-							title: text,
-							isComplete: false,
-						},
-					],
-				});
+			if (title.length !== 0) {
+				setTodoList((todoList) =>
+					todoList.concat({ title, isCompleted: false })
+				);
 			}
 		}
-	}
+	};
 
-	newItemChange(event) {
-		this.setState({ newItem: event.target.value });
-	}
+	const handleInputChange = (event) => {
+		setNewItem(event.target.value);
+	};
 
-	allItemClick() {
-		let hasItemNotComplete = !this.state.todoList.every((item) => {
-			return item.isComplete;
-		});
-
-		if (hasItemNotComplete) {
-			this.checkAllItem();
-		} else {
-			this.uncheckAllItem();
-		}
-	}
-
-	checkAllItem() {
-		let todoList = this.state.todoList;
-		todoList = todoList.map((item) => {
-			return { ...item, isComplete: true };
-		});
-
-		this.setState({ todoList: todoList });
-	}
-
-	uncheckAllItem() {
-		let todoList = this.state.todoList;
-		todoList = todoList.map((item) => {
-			return { ...item, isComplete: false };
-		});
-
-		this.setState({ todoList: todoList });
-	}
-
-	filterItem() {
-		let { selected } = this.state;
-
-		switch (selected) {
-			case 'active':
-				return this.activeItem();
-			case 'completed':
-				return this.completedItem();
-			default:
-				return this.state.todoList;
-		}
-	}
-
-	activeItem() {
-		return this.state.todoList.filter((item) => {
-			return !item.isComplete;
-		});
-	}
-
-	completedItem() {
-		return this.state.todoList.filter((item) => {
-			return item.isComplete;
-		});
-	}
-
-	filterAll() {
-		this.setState({ selected: 'all' });
-	}
-
-	filterActive() {
-		this.setState({ selected: 'active' });
-	}
-
-	filterCompleted() {
-		this.setState({ selected: 'completed' });
-	}
-
-	clearCompleted() {
-		this.setState({ todoList: this.activeItem() });
-	}
-
-	render() {
-		const { newItem } = this.state;
-		const filter = this.filterItem();
-		const counter = this.activeItem().length;
-
-		return (
-			<div className="app">
-				<ListGroup>
-					<ListGroupItem>
-						<Header
-							addNewItem={this.addNewItem}
-							newItemChange={this.newItemChange}
-							allItemClick={this.allItemClick}
-							newItem={newItem}
-						/>
-					</ListGroupItem>
-					{filter.map((item, index) => (
-						<ListGroupItem key={index}>
-							<ListItem item={item} onClick={this.changeStatus(item)} />
-							<img src={close} alt="" onClick={this.deleteItem(index)} />
-						</ListGroupItem>
-					))}
-					<ListGroupItem>
-						<Footer
-							counter={counter}
-							selected={this.state.selected}
-							filterAll={this.filterAll}
-							filterActive={this.filterActive}
-							filterCompleted={this.filterCompleted}
-							clearCompleted={this.clearCompleted}
-						/>
-					</ListGroupItem>
-				</ListGroup>
-			</div>
+	const checkAllItems = () => {
+		setTodoList((todoList) =>
+			todoList.map((todo) => ({ ...todo, isCompleted: true }))
 		);
-	}
-}
+	};
+
+	const unCheckAllItem = () => {
+		setTodoList((todoList) =>
+			todoList.map((todo) => ({ ...todo, isCompleted: false }))
+		);
+	};
+
+	const allItemClick = () => {
+		let hasItemUncompleted = todoList.some((todo) => !todo.isCompleted);
+
+		if (hasItemUncompleted) {
+			checkAllItems();
+		} else {
+			unCheckAllItem();
+		}
+	};
+
+	const changeFilterType = (type) => {
+		switch (type) {
+			case 'all':
+				setFilterType('all');
+				break;
+			case 'active':
+				setFilterType('active');
+				break;
+			case 'completed':
+				setFilterType('completed');
+				break;
+			default:
+				setFilterType('all');
+		}
+	};
+
+	const clearCompleted = () => {
+		setTodoList((todoList) => todoList.filter((todo) => !todo.isCompleted));
+	};
+
+	const changeStatus = (index) => {
+		if (todoList[index]) {
+			setTodoList((todoList) => [
+				...todoList.slice(0, index),
+				{
+					...todoList[index],
+					isCompleted: !todoList[index].isCompleted,
+				},
+				...todoList.slice(index + 1),
+			]);
+		}
+	};
+
+	const deleteItem = (index) => {
+		if (todoList[index]) {
+			setTodoList((todoList) => [
+				...todoList.slice(0, index),
+				...todoList.slice(index + 1),
+			]);
+		}
+	};
+
+	const todoListFiltered = (type) => {
+		return todoList.filter((todo) => {
+			switch (type) {
+				case 'all':
+					return todo;
+				case 'active':
+					return !todo.isCompleted;
+				case 'completed':
+					return todo.isCompleted;
+				default:
+					return true;
+			}
+		});
+	};
+
+	const todoListCounter = (type) => {
+		return todoListFiltered(type).length;
+	};
+
+	return (
+		<div className="app">
+			<ListGroup>
+				<ListGroupItem>
+					<Header
+						addNewItem={addNewItem}
+						newItemChange={handleInputChange}
+						allItemClick={allItemClick}
+						newItem={newItem}
+					/>
+				</ListGroupItem>
+				{todoListFiltered(filterType).map((item, index) => (
+					<ListGroupItem key={index}>
+						<ListItem item={item} onClick={() => changeStatus(index)} />
+						<img src={close} alt="" onClick={() => deleteItem(index)} />
+					</ListGroupItem>
+				))}
+				<ListGroupItem>
+					<Footer
+						counter={todoListCounter('active')}
+						selected={filterType}
+						filterAll={() => changeFilterType('all')}
+						filterActive={() => changeFilterType('active')}
+						filterCompleted={() => changeFilterType('completed')}
+						clearCompleted={clearCompleted}
+					/>
+				</ListGroupItem>
+			</ListGroup>
+		</div>
+	);
+};
 
 export default App;
