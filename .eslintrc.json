@@ -14,7 +14,7 @@
   "plugins": ["react", "prettier"],
   "rules": {
     "react/react-in-jsx-scope": "off",
-    "prettier/prettier": "error"
+    "arrow-parens": ["error", "as-needed"]
   },
   "settings": {
     "react": {

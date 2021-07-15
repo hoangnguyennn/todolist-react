@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 
 import './style.css';
 
+import { FILTER_TYPES } from '../../constants';
+
 const Footer = ({
   counter,
   selected,
@@ -21,7 +23,7 @@ const Footer = ({
       <ul className="filter">
         <li
           className={classnames('all', {
-            selected: selected === 'all',
+            selected: selected === FILTER_TYPES.ALL,
           })}
           onClick={filterAll}
         >
@@ -29,7 +31,7 @@ const Footer = ({
         </li>
         <li
           className={classnames('active', {
-            selected: selected === 'active',
+            selected: selected === FILTER_TYPES.ACTIVE,
           })}
           onClick={filterActive}
         >
@@ -37,17 +39,14 @@ const Footer = ({
         </li>
         <li
           className={classnames('completed', {
-            selected: selected === 'completed',
+            selected: selected === FILTER_TYPES.COMPLETED,
           })}
           onClick={filterCompleted}
         >
           Completed
         </li>
       </ul>
-      <button
-        className={classnames('clear-completed')}
-        onClick={clearCompleted}
-      >
+      <button className="clear-completed" onClick={clearCompleted}>
         Clear completed
       </button>
     </div>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { ListGroup, ListGroupItem } from 'reactstrap';
 
 import './App.css';
@@ -9,105 +9,85 @@ import Footer from './components/Footer';
 
 import close from './assets/images/close.svg';
 
+import { initialTodos, FILTER_TYPES, KEYS } from './constants';
+
 const App = () => {
   const [newItem, setNewItem] = useState('');
-  const [todoList, setTodoList] = useState([
-    { title: 'Ăn', isCompleted: false },
-    { title: 'Ngủ', isCompleted: false },
-    { title: 'Code', isCompleted: true },
-  ]);
-  const [filterType, setFilterType] = useState('all');
+  const [todos, setTodos] = useState(initialTodos);
+  const [filterType, setFilterType] = useState(FILTER_TYPES.ALL);
 
-  const addTodo = (event) => {
-    if (event.keyCode === 13) {
+  const addTodo = event => {
+    if (event.key === KEYS.ENTER) {
       const title = event.target.value;
+      const titleTrimed = title.replace(/\s+/g, ' ').trim();
 
-      if (title.length !== 0) {
-        setTodoList((todoList) =>
-          todoList.concat({ title, isCompleted: false })
-        );
+      if (titleTrimed.length !== 0) {
+        setTodos(todos => [
+          ...todos,
+          { title: titleTrimed, isCompleted: false },
+        ]);
+
+        setNewItem('');
       }
     }
   };
 
-  const newTodoTitleChange = (event) => {
+  const newTodoTitleChange = event => {
     setNewItem(event.target.value);
   };
 
-  const changeTodosStatus = (isCompleted) => {
-    setTodoList((todoList) =>
-      todoList.map((todo) => ({ ...todo, isCompleted }))
-    );
+  const changeTodosStatus = isCompleted => {
+    setTodos(todos => todos.map(todo => ({ ...todo, isCompleted })));
   };
 
   const allItemClick = () => {
-    let hasItemUncompleted = todoList.some((todo) => !todo.isCompleted);
-
-    if (hasItemUncompleted) {
-      changeTodosStatus(true);
-    } else {
-      changeTodosStatus(false);
-    }
-  };
-
-  const changeFilterType = (type) => {
-    switch (type) {
-      case 'all':
-        setFilterType('all');
-        break;
-      case 'active':
-        setFilterType('active');
-        break;
-      case 'completed':
-        setFilterType('completed');
-        break;
-      default:
-        setFilterType('all');
-    }
+    let hasItemUncompleted = todos.some(todo => !todo.isCompleted);
+    changeTodosStatus(hasItemUncompleted);
   };
 
   const clearTodosCompleted = () => {
-    setTodoList((todoList) => todoList.filter((todo) => !todo.isCompleted));
+    setTodos(todos => todos.filter(todo => !todo.isCompleted));
   };
 
-  const changeTodoStatus = (index) => {
-    if (todoList[index]) {
-      setTodoList((todoList) => [
-        ...todoList.slice(0, index),
-        {
-          ...todoList[index],
-          isCompleted: !todoList[index].isCompleted,
-        },
-        ...todoList.slice(index + 1),
-      ]);
+  const changeTodoStatus = index => {
+    setTodos(todos => [
+      ...todos.slice(0, index),
+      {
+        ...todos[index],
+        isCompleted: !todos[index].isCompleted,
+      },
+      ...todos.slice(index + 1),
+    ]);
+  };
+
+  const deleteTodo = index => {
+    setTodos(todos => [...todos.slice(0, index), ...todos.slice(index + 1)]);
+  };
+
+  const todosFiltered = type => {
+    switch (type) {
+      case FILTER_TYPES.ALL:
+        return todos;
+      case FILTER_TYPES.ACTIVE:
+        return todosUnCompleted;
+      case FILTER_TYPES.COMPLETED:
+        return todosCompleted;
+      default:
+        return todos;
     }
   };
 
-  const deleteTodo = (index) => {
-    if (todoList[index]) {
-      setTodoList((todoList) => [
-        ...todoList.slice(0, index),
-        ...todoList.slice(index + 1),
-      ]);
-    }
-  };
+  const todosCompleted = useMemo(
+    () => todos.filter(todo => todo.isCompleted),
+    [todos]
+  );
 
-  const todosFiltered = (type) => {
-    return todoList.filter((todo) => {
-      switch (type) {
-        case 'all':
-          return todo;
-        case 'active':
-          return !todo.isCompleted;
-        case 'completed':
-          return todo.isCompleted;
-        default:
-          return true;
-      }
-    });
-  };
+  const todosUnCompleted = useMemo(
+    () => todos.filter(todo => !todo.isCompleted),
+    [todos]
+  );
 
-  const todosFilteredCounter = (type) => {
+  const todosFilteredCounter = type => {
     return todosFiltered(type).length;
   };
 
@@ -133,11 +113,11 @@ const App = () => {
         ))}
         <ListGroupItem>
           <Footer
-            counter={todosFilteredCounter('active')}
+            counter={todosFilteredCounter(FILTER_TYPES.ACTIVE)}
             selected={filterType}
-            filterAll={() => changeFilterType('all')}
-            filterActive={() => changeFilterType('active')}
-            filterCompleted={() => changeFilterType('completed')}
+            filterAll={() => setFilterType(FILTER_TYPES.ALL)}
+            filterActive={() => setFilterType(FILTER_TYPES.ACTIVE)}
+            filterCompleted={() => setFilterType(FILTER_TYPES.COMPLETED)}
             clearTodosCompleted={clearTodosCompleted}
           />
         </ListGroupItem>

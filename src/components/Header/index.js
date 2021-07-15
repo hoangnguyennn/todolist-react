@@ -7,7 +7,7 @@ import checkAll from '../../assets/images/check-all.svg';
 
 const inputRef = createRef();
 
-const Header = ({ addNewItem, newTodoTitleChange, allItemClick, newItem }) => {
+const Header = ({ addTodo, newTodoTitleChange, allItemClick, newItem }) => {
   useEffect(() => {
     inputRef.current.focus();
   }, []);
@@ -20,7 +20,7 @@ const Header = ({ addNewItem, newTodoTitleChange, allItemClick, newItem }) => {
         placeholder="Điều gì bạn muốn làm?"
         value={newItem}
         onChange={newTodoTitleChange}
-        onKeyUp={addNewItem}
+        onKeyUp={addTodo}
         ref={inputRef}
       />
     </div>
@@ -28,7 +28,7 @@ const Header = ({ addNewItem, newTodoTitleChange, allItemClick, newItem }) => {
 };
 
 Header.propTypes = {
-  addNewItem: PropTypes.func,
+  addTodo: PropTypes.func,
   newTodoTitleChange: PropTypes.func,
   allItemClick: PropTypes.func,
   newItem: PropTypes.string,
