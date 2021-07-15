@@ -1,29 +1,29 @@
 .item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-grow: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-grow: 1;
 }
 
 .item > div {
-    flex-grow: 1;
-    font-size: 24px;
-    margin-left: 15px;
-    word-break: break-all;
+  flex-grow: 1;
+  font-size: 24px;
+  margin-left: 15px;
+  word-break: break-all;
 }
 
 .item > img {
-    width: 32px;
-    margin: 5px;
-    cursor: pointer;
-    opacity: .5;
+  width: 32px;
+  margin: 5px;
+  cursor: pointer;
+  opacity: 0.5;
 }
 
 .item-complete > img {
-    opacity: 1;
+  opacity: 1;
 }
 
 .item-complete > div {
-    text-decoration: line-through;
-    opacity: .2;
+  text-decoration: line-through;
+  opacity: 0.2;
 }

@@ -1,25 +1,25 @@
 .top-search {
-    width: 100%;
-    display: flex;
-    align-items: center;
+  width: 100%;
+  display: flex;
+  align-items: center;
 }
 
 .top-search > img {
-    width: 32px;
-    margin: 5px;
-    cursor: pointer;
+  width: 32px;
+  margin: 5px;
+  cursor: pointer;
 }
 
 .top-search > input {
-    flex-grow: 1;
-    margin-left: 15px;
-    width: 100%;
-    font-size: 24px;
-    border: none;
-    outline: none;
+  flex-grow: 1;
+  margin-left: 15px;
+  width: 100%;
+  font-size: 24px;
+  border: none;
+  outline: none;
 }
 
 .top-search > input::placeholder {
-    font-style: italic;
-    opacity: .5;
+  font-style: italic;
+  opacity: 0.5;
 }

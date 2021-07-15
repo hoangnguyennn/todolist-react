@@ -1,19 +1,19 @@
 .app {
-	width: 500px;
+  width: 500px;
 }
 
 .list-group-item {
-	display: flex;
+  display: flex;
 }
 
 .list-group-item > img {
-	width: 16px;
-	margin: 13px;
-	opacity: 0.5;
-	cursor: pointer;
-	display: none;
+  width: 16px;
+  margin: 13px;
+  opacity: 0.5;
+  cursor: pointer;
+  display: none;
 }
 
 .list-group-item:hover > img {
-	display: inline-block;
+  display: inline-block;
 }
