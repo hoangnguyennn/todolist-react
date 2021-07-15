@@ -1,31 +1,32 @@
 {
-  "name": "todolist-react",
+  "name": "react-todolist",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "node index.js",
     "dev": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "start": "node index.js",
     "lint": "eslint",
-    "fix": "eslint --fix ./src/**/*.js"
+    "lint:fix": "eslint --fix src/**/*.js"
   },
   "dependencies": {
-    "bootstrap": "4.6.0",
-    "classnames": "2.2.6",
-    "dotenv": "8.2.0",
+    "bootstrap": "5.0.2",
+    "classnames": "2.3.1",
+    "dotenv": "10.0.0",
     "express": "4.17.1",
-    "express-favicon": "2.0.1",
     "prop-types": "15.7.2",
-    "react": "17.0.1",
-    "react-dom": "17.0.1",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
     "react-scripts": "4.0.3",
     "reactstrap": "8.9.0"
   },
   "devDependencies": {
-    "eslint": "7.21.0",
-    "eslint-plugin-react": "7.22.0"
+    "eslint": "7.30.0",
+    "eslint-config-prettier": "8.3.0",
+    "eslint-plugin-prettier": "3.4.0",
+    "prettier": "2.3.2"
   },
   "eslintConfig": {
     "extends": "react-app"

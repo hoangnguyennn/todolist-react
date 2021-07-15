@@ -4,63 +4,63 @@ import PropTypes from 'prop-types';
 import './style.css';
 
 const Footer = ({
-	counter,
-	selected,
-	filterAll,
-	filterActive,
-	filterCompleted,
-	clearCompleted,
+  counter,
+  selected,
+  filterAll,
+  filterActive,
+  filterCompleted,
+  clearCompleted,
 }) => {
-	return (
-		<div className="footer">
-			<span className="todo-count">
-				<span className="counter">{counter}</span>
-				<span className="item">{counter < 2 ? 'item' : 'items'}</span>
-				<span className="left">left</span>
-			</span>
-			<ul className="filter">
-				<li
-					className={classnames('all', {
-						selected: selected === 'all',
-					})}
-					onClick={filterAll}
-				>
-					All
-				</li>
-				<li
-					className={classnames('active', {
-						selected: selected === 'active',
-					})}
-					onClick={filterActive}
-				>
-					Active
-				</li>
-				<li
-					className={classnames('completed', {
-						selected: selected === 'completed',
-					})}
-					onClick={filterCompleted}
-				>
-					Completed
-				</li>
-			</ul>
-			<button
-				className={classnames('clear-completed')}
-				onClick={clearCompleted}
-			>
-				Clear completed
-			</button>
-		</div>
-	);
+  return (
+    <div className="footer">
+      <span className="todo-count">
+        <span className="counter">{counter}</span>
+        <span className="item">{counter < 2 ? 'item' : 'items'}</span>
+        <span className="left">left</span>
+      </span>
+      <ul className="filter">
+        <li
+          className={classnames('all', {
+            selected: selected === 'all',
+          })}
+          onClick={filterAll}
+        >
+          All
+        </li>
+        <li
+          className={classnames('active', {
+            selected: selected === 'active',
+          })}
+          onClick={filterActive}
+        >
+          Active
+        </li>
+        <li
+          className={classnames('completed', {
+            selected: selected === 'completed',
+          })}
+          onClick={filterCompleted}
+        >
+          Completed
+        </li>
+      </ul>
+      <button
+        className={classnames('clear-completed')}
+        onClick={clearCompleted}
+      >
+        Clear completed
+      </button>
+    </div>
+  );
 };
 
 Footer.propTypes = {
-	counter: PropTypes.number,
-	selected: PropTypes.string,
-	filterAll: PropTypes.func,
-	filterActive: PropTypes.func,
-	filterCompleted: PropTypes.func,
-	clearCompleted: PropTypes.func,
+  counter: PropTypes.number,
+  selected: PropTypes.string,
+  filterAll: PropTypes.func,
+  filterActive: PropTypes.func,
+  filterCompleted: PropTypes.func,
+  clearCompleted: PropTypes.func,
 };
 
 export default Footer;
